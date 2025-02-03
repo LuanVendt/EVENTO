@@ -1,4 +1,4 @@
-import { EVENTS_URL } from "@/app/constants";
+import { EVENTS_URL } from "@/lib/constants";
 import EventsList from "@/components/events-list";
 import H1 from "@/components/h1";
 import { EventoEvent } from "@/lib/types";
