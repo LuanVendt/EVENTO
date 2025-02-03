@@ -22,7 +22,7 @@ export default function Footer() {
         {routes.map((route) => {
           return (
             <li key={route.path}>
-              <Link href={route.path}>{route.path}</Link>
+              <Link href={route.path}>{route.name}</Link>
             </li>
           );
         })}
