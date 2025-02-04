@@ -21,6 +21,18 @@ export async function generateMetadata({
   };
 }
 
+export async function generateStaticParams() {
+  // top 100 most popular events
+  return [
+    {
+      slug: "comedy-extravaganza",
+    },
+    {
+      slug: "dj-practice-session",
+    },
+  ];
+}
+
 export default async function EventPage({ params }: EventPageProps) {
   const event = await getEvent(params.slug);
 
