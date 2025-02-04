@@ -11,6 +11,10 @@ type EventsPageProps = {
   };
 };
 
+type SearchEventsPageProps = EventsPageProps & {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export function generateMetadata({ params }: EventsPageProps): Metadata {
   const city = capitalize(params.city);
 
@@ -19,8 +23,12 @@ export function generateMetadata({ params }: EventsPageProps): Metadata {
   };
 }
 
-export default async function EventsPage({ params }: EventsPageProps) {
+export default async function EventsPage({
+  params,
+  searchParams,
+}: SearchEventsPageProps) {
   const city = params.city;
+  const page = Number(searchParams.page) || 1;
 
   return (
     <main className="flex flex-col items-center py-24 px-[20px] min-h-[110vh]">
@@ -30,7 +38,7 @@ export default async function EventsPage({ params }: EventsPageProps) {
       </H1>
 
       <Suspense fallback={<Loading />}>
-        <EventsList city={city} />
+        <EventsList city={city} page={page} />
       </Suspense>
     </main>
   );
