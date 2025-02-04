@@ -1,5 +1,6 @@
 import H1 from "@/components/h1";
-import { EVENTS_URL } from "@/lib/constants";
+import { getEvent } from "@/lib/utils";
+import { Metadata } from "next";
 import Image from "next/image";
 
 type EventPageProps = {
@@ -8,14 +9,20 @@ type EventPageProps = {
   };
 };
 
-export default async function EventPage({ params }: EventPageProps) {
+export async function generateMetadata({
+  params,
+}: EventPageProps): Promise<Metadata | undefined> {
   const slug = params.slug;
 
-  const response = await fetch(`${EVENTS_URL}/${slug}`);
+  const event = await getEvent(slug);
 
-  if (!response.ok) return <div>Failed to load event</div>;
+  return {
+    title: event?.name || "Event not found",
+  };
+}
 
-  const event = await response.json();
+export default async function EventPage({ params }: EventPageProps) {
+  const event = await getEvent(params.slug);
 
   return (
     <main>

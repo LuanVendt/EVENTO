@@ -1,21 +1,12 @@
-import { EVENTS_URL } from "@/lib/constants";
-import { EventoEvent } from "@/lib/types";
+import { getEvents } from "@/lib/utils";
 import EventCard from "./event-card";
 
 type EventsListProps = {
   city: string;
 };
 
-export default async function EventsList({ city }: { city: string }) {
-  const response = await fetch(`${EVENTS_URL}?city=${city}`, {
-    next: {
-      revalidate: 300,
-    },
-  });
-
-  if (!response.ok) return <div>Failed to load events</div>;
-
-  const events: EventoEvent[] = await response.json();
+export default async function EventsList({ city }: EventsListProps) {
+  const events = await getEvents(city);
 
   return (
     <section className="max-w-[1100px] flex flex-wrap gap-8 justify-center">
