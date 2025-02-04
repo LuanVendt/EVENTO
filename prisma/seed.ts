@@ -253,18 +253,13 @@ const events = [
 ];
 
 async function main() {
-  console.log(`Start seeding ...`);
-
   for (const event of events) {
-    const result = await prisma.eventoEvent.upsert({
+    await prisma.eventoEvent.upsert({
       where: { id: event.id },
       update: {},
       create: event,
     });
-    console.log(`Created event with id: ${result.id}`);
   }
-
-  console.log(`Seeding finished.`);
 }
 
 main()
